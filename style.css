@@ -1,0 +1,73 @@
+body {
+    font: 10px sans-serif;
+}
+
+#save {
+    border: none;
+    background: none;
+}
+
+#save:focus {
+    outline:0;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.x.axis path {
+    display: none;
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+
+.area {
+    fill: lightsteelblue;
+    stroke-width: 0;
+}
+.navLine {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+
+.navArea {
+    fill: lightsteelblue;
+    stroke-width: 0;
+}
+
+.viewport {
+    fill: #b47846;
+    opacity: 0.4;
+
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+.grid path {
+    stroke-width: 0;
+}
+
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+.focus circle {
+    fill: none;
+    stroke: steelblue;
+}
+
+.focus text {
+    font-style: oblique;
+    font-size: 12px;
+}
