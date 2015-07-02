@@ -308,7 +308,7 @@ d3.csv("StorageLog.csv", function(data){
         .attr('width', navWidth + margin.left + margin.right)
         .attr('height', navHeight + margin.top + margin.bottom)
         .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        .attr('transform', 'translate(' + margin.left + ',' + 0 + ')');
 
     var navXScale = d3.time.scale()
             .domain(d3.extent(filteredData, function(d) { return d.Date; }))
