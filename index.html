@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//fast.eager.io/K6ULLXegZ2.js"></script>
+    <script type="text/javascript" src="https://gabelerner.github.io/canvg/rgbcolor.js"></script>
+    <script type="text/javascript" src="https://gabelerner.github.io/canvg/StackBlur.js"></script>
+    <script type="text/javascript" src="https://gabelerner.github.io/canvg/canvg.js"></script>
+    <link href="style.css" rel="stylesheet" />
+    <title>Visual Representation of Multiple Replications</title>
+</head>
+<body>
+<script>
+    var setup = {
+        title: "This is a Chart.",      //Set a title to be displayed at the top of the chart
+        table: "O_Storage_log_MM2",     //Choose the table to pull data from   
+        column: "Ersai,Prorva_COF,Northern_Europe,Date", //Always make sure date is the last column 
+        repcol: "iReplicationId",
+        graphWidth: 600,        //width of graph. recommended to make it fit in the iFrame
+        showNav: true,          //display the navigation chart below the main chart
+        enableControls: true,   //controls such as zoom and pan on main chart
+        showToolTip: true,      //display tool tip on mouseover
+        columnType: "Region",  //for instance, region, boat ID, etc. This changes the last word of the title of the regionMenu
+        showLoadTime: true,    //display load time in the control panel. useful for benchmarks
+        showDashboard: true,    //only set the following if showDashboard is false
+        centerLine: "Mean",     //Mean, median, or mode
+        areaType: "P10"         //Choose minmax, P# (i.e. P90) or 99,98,95,90,80,or 70 percent confidence interval
+    };
+    var columnnames = setup.column + ',' + setup.repcol;
+</script>
+
+<!--Set up the dashboard with dropdown boxes and buttons-->
+<div align = "center" id = "dashboard">
+    <div id="controls">
+        <table cellpadding="15">
+            <tr>
+                <td>
+                    <div id="container"></div>
+                </td>
+                <td>
+                    <div>
+                        <h2>Choose a center line</h2>
+                        <select id = "lineType">
+                            <option value="Mean">Mean</option>
+                            <option value="Median">Median</option>
+                            <option value="Mode">Mode</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <h2>Choose the area type</h2>
+                        <select id = "areaType">
+                            <option value="minmax">Min and Max</option>
+                            <option value="pr">P(x)</option>
+                            <optgroup label="Confidence Interval">
+                                <option value="99">99%</option>
+                                <option value="98">98%</option>
+                                <option value="95">95%</option>
+                                <option value="90">90%</option>
+                                <option value="80">80%</option>
+                                <option value="70">70%</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><button id="save" class="button"><img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-1/128/save-icon.png" height="20%" width="20%" alt="Save as Image"/></button></td>
+                <td><div id = "loadTime"></div></td>
+                <td>
+                    <div style="display:none" align="center" id = "pr">
+                        <label for="pArea">
+                            <font size="3px">P<span id="pArea-value">...</span></font>
+                        </label>
+                        <input type="range" min="0" max="100" id="pArea">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div align = "center" id="chart"></div>
+<canvas id = 'canvas' style="display:none"></canvas>
+<script src="graph.js"></script>
+</body>
+</html>
