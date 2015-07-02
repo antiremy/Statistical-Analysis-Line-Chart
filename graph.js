@@ -54,9 +54,9 @@ var areaType; // for printing settings
 //add line below to fix image output for high res displays
 //must also change width to be multiplied by pixel ratio
 //var pixelRatio = window.devicePixelRatio || 1;
-var margin = {top: 30, right: 110, bottom: 52, left: 50},
-    width = 960  - margin.left - margin.right,
-    height = setup.graphWidth  - margin.top - margin.bottom;
+var margin = {top: 40, right: 110, bottom: 52, left: 50},
+    width = setup.graphWidth  - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%m/%d/%Y").parse;
 var formatDate = d3.time.format("%b %d %Y");
@@ -179,12 +179,13 @@ d3.csv("StorageLog.csv", function(data){
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.bottom + margin.top)
         .attr("fill", "white");
-    svg.append("svg:image")
+
+    svg.append("image") //put SN logo on the chart
         .attr("xlink:href", "image.jpg")
         .attr("width", 153)
         .attr("height", 44)
-        .attr("x", width)
-        .attr("y",0);
+        .attr("x", width - margin.right - 35)
+        .attr("y", -40);
 
     svg.append("g")
         .attr("class", "x axis")
@@ -575,7 +576,7 @@ d3.csv("StorageLog.csv", function(data){
     });
 
     d3.select("#save").on("click", function() { // save button handler
-        var $container = $('#chart'),
+        var $container = d3.select('#chart'),
         // Canvg requires trimmed content
             content = $container.html().trim(),
             canvas = document.getElementById('canvas'),
@@ -597,12 +598,16 @@ d3.csv("StorageLog.csv", function(data){
         context.fillText("Center: " + lineType, 65, 62);
         context.fillText("Area: " + areaType, 65, 77);
         // Change img be SVG representation
-        var theImage = canvas.toDataURL('image/png');
+        canvg(canvas, content, {
+            renderCallback: function() {
+                var theImage = canvas.toDataURL('image/png');
 
-        var a = document.createElement("a");
-        a.download = "sample.png";
-        a.href = theImage;
-        a.click(); // this method only works in chrome
+                var a = document.createElement("a");
+                a.download = "sample.png";
+                a.href = theImage;
+                a.click(); // this method only works in chrome
+            }
+        });
     });
 
 
